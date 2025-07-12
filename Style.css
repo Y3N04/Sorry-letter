@@ -1,0 +1,251 @@
+html {
+  --flap-color: #ffd760;
+  --front-color-sides: #f5dc7b;
+  --front-color-bottom: #ffd760;
+  --inner-color: #fff25e;
+  --envelope-border-radius: 6px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background: conic-gradient(from 90deg at 50% 125%,  #a8e6cf,  /* light green */
+    #81c784,  /* medium light green */
+    #66bb6a,  /* medium green */
+    #388e3c,  /* deep green */
+    #388e3c,  /* deep green again for smooth loop */
+    #66bb6a,
+    #81c784,
+    #a8e6cf
+    );
+  min-height: 100vh; /* Ensures full viewport height */
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Ensures contents are centered */
+  width: 100%;
+  max-width: 620px;
+}
+
+.envelope-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.envelope {
+  position: relative;
+  width: 600px;
+  min-height: 320px;
+  margin: auto;
+  border-radius: var(--envelope-border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: visible; /* Ensures letter can expand separately */
+  perspective: 1000px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--inner-color);
+}
+
+.envelope .flap {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  left: 50%;
+  transform: translateX(-50%) rotateX(0deg);
+  transform-origin: top;
+  border-left: 320px solid transparent;
+  border-right: 320px solid transparent;
+  border-bottom: 160px solid transparent;
+  border-top: 180px solid var(--flap-color);
+  transition: transform 0.6s ease;
+  z-index: 4;
+  overflow: visible;
+}
+
+.envelope.open .flap {
+  transform: translateX(-50%) rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope .front {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+  border-left: 320px solid var(--front-color-sides);
+  border-right: 320px solid var(--front-color-sides);
+  border-bottom: 160px solid var(--front-color-bottom);
+  border-top: 180px solid transparent;
+  border-radius: 0 0 var(--envelope-border-radius) var(--envelope-border-radius);
+  z-index: 5;
+}
+
+.envelope .letter {
+  position: fixed; /* Ensures it's independent of the envelope */
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -120%); /* Positions it above envelope */
+  width: 180%; /* Allows letter to be larger */
+  height: auto;
+  max-height: 600px;
+  background: white;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  transition: opacity 0.6s ease, transform 0.6s ease-in-out;
+  opacity: 0; /* Hide letter initially */
+  display: none;
+  z-index: 20; /* Ensures it appears above envelope */
+  animation: slideIn 0.6s ease forwards; /* Animation for letter appearance */
+}
+
+.envelope.open .letter {
+  display: block; /* Letter appears */
+  opacity: 1; /* Smooth fade-in */
+  transform: translate(-50%, -50%);  /* Moves to readable position */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  animation: slideIn 0.6s ease forwards;
+}
+
+
+.letter-inner {
+  color: #333;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.letter-inner strong {
+  font-size: 18px;
+}
+
+.buttons {
+  margin-top: 200px;
+  display: flex;
+  gap: 50px;
+  z-index: 20;
+  position: relative;
+}
+
+button {
+  font-weight: 800;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+button:hover {
+  background-color: #206b02;
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .envelope {
+    max-width: 90vw;
+    height: 180px;
+  }
+
+  .envelope .flap {
+    border-left: 45vw solid transparent;
+    border-right: 45vw solid transparent;
+    border-top: 160px solid var(--flap-color);
+    border-bottom: 160px solid transparent;
+  }
+
+  .envelope .front {
+    border-left: 45vw solid var(--front-color-sides);
+    border-right: 45vw solid var(--front-color-sides);
+    border-bottom: 160px solid var(--front-color-bottom);
+    border-top: 160px solid transparent;
+  }
+
+  .envelope .letter {
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 95vw; /* Ensure letter is bigger on mobile */
+    height: auto;
+    max-height: 600px;
+    background: white;
+    padding: 15px; /* Reduce padding for better fit */
+    font-size: 11px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    transition: opacity 0.6s ease, transform 0.6s ease-in-out;
+    opacity: 0;
+    display: none;
+    z-index: 20;
+  }
+
+  .envelope.open .letter {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  button {
+    min-width: 100px;
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+}
+
+.seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  background-color: #980000; /* Tomato color for seal */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  z-index: 10; /* Ensure it appears above envelope */
+  flex-shrink: 0;
+}
+
+.envelope .flap,
+.envelope .letter {
+  transition: transform 0.7s ease-in-out; /* Enhances smoothness */
+}
+
+
+
+

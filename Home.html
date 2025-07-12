@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sorry letter :b</title>
+  <link rel="stylesheet" href="Style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+  <div class="envelope-wrapper">
+    <div class="envelope" id="envelope">
+      <div class="seal">
+        <div class="seal-mark">
+          <h1>Y</h1>
+        </div>
+      </div>
+      <div class="flap"></div>
+      <div class="front"></div>
+      <div class="letter">
+        <div class="letter-inner">
+          <h2>To Everyone:</h2>
+          <p>Hello, everyone kay cha,rez pati nadin kay yana, una sa lahat gusto ko lang sabihin na sorry dahil sa di matuloy yung gala natin/movie marathon natin, dahil nga di ako makaalis pero Believe me or not gusto ko din talagang gumala kasama kayo, pero di kasi kaya eh dahil nga minsan ginagawa kaming bantay dito sa shop and i know din naman na malapit na ang pasukan nyo and sooner ako din malapit na din magpasukan kaya nga gusto ko din gumala pero kasi unxpected na di makakapagbantay ang tita namin dito sa shop dahil walang bantay yung isang shop kaya ako ang ginawang bantay dito sa shop.<br><br> Sana wag kayong mag tanim ng sama ng loob sakin dahil ako mismo talaga namimiss na din kayo tsaka pala baka sabihin nyo bakit di tayo umalis nung wed tapos iba pa kasama ko, sinamahan ko sila dahil nga malapit na din pasukan ni nuiz kaya nga nauna sila.. i know na parang tanga ako dahil di ko manlang sinabi sainyo nun pero kasi nalilito nadin talaga ako kung paano ang gagawin ko kasi ang hirap i balance ng oras para lang makasama ko kayong lahat.<br> Kaya nga sana wag kayong magalit sakin dahil sinusubukan ko naman talagang gumawa ng oras para sainyong lahat pero minsan talaga di ko na alam kung paano ko pa masisingit mga gala natin dahil nga strict din kasi ang nanay ko alam nyo naman yun pero ayun nga sana talaga wag kayong magtampo or magalit dahil baka sabihin nyo mas gusto kong samahan yung iba, di sa ganun ah wag kayo mag isip ng ganun kasi di ko lang talaga maayos yung schedule ko kaya di ko kayo masamahan.<br>Pensya na talaga kayo guys, sana maintindihan nyo ako (oa ko noh may pa ganto pa pwede naman sa messenger nalang wala lang gusto ko lang tignan kung may wifi pa kayo or naka load lang HHAAHAHAHAHAHAHHA jk) pero ayun nga sorry talaga guys babawi nalang ako next time....<br><br> From Yen</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="buttons">
+    <button id="toggle-btn">Open / Close Envelope</button>
+  </div>
+</div>
+</body>
+<script>
+  const envelope = document.getElementById('envelope');
+  const toggleBtn = document.getElementById('toggle-btn');
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = envelope.classList.toggle('open');
+
+    if (isOpen) {
+      // Trigger confetti
+      const duration = 2 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      const confettiInterval = setInterval(() => {
+        confetti({
+          particleCount: 150,
+          startVelocity: 30,
+          spread: 360,
+          origin: { x: Math.random(), y: Math.random() - 0.2 }
+        });
+
+        if (Date.now() > animationEnd) {
+          clearInterval(confettiInterval);
+        }
+      }, 250);
+    }
+  });
+</script>
+
+</html>
